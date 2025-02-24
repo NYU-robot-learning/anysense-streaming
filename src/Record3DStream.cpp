@@ -4,6 +4,7 @@
 #include <usbmuxd.h>
 #include <cstring>
 #include <array>
+#include <iostream>
 
 #define NTOHL_(n) (((((unsigned long)(n) & 0xFF)) << 24) | \
                   ((((unsigned long)(n) & 0xFF00)) << 8) | \
@@ -177,28 +178,34 @@ namespace Record3D
 
             // 3.4 Read and decompress the depth frame
             currSize = record3DHeader.depthSize;
-            // Resize the decompressed depth image buffer
-            size_t decompressedDepthDataSize = record3DHeader.depthWidth * record3DHeader.depthHeight * sizeof(float);
-            if ( depthImageBuffer_.size() != decompressedDepthDataSize )
-            {
-                depthImageBuffer_.resize(decompressedDepthDataSize);
-            }
+            std::cout<<"Depth size: "<<(currSize > 0)<<std::endl;
 
-            DecompressBuffer(rawMessageBuffer.data() + offset, currSize, depthImageBuffer_);
-            offset += currSize;
+            if(currSize > 0) {
+                // Resize the decompressed depth image buffer
+                size_t decompressedDepthDataSize = record3DHeader.depthWidth * record3DHeader.depthHeight * sizeof(float);
+                if ( depthImageBuffer_.size() != decompressedDepthDataSize )
+                {
+                    depthImageBuffer_.resize(decompressedDepthDataSize);
+                }
+
+                DecompressBuffer(rawMessageBuffer.data() + offset, currSize, depthImageBuffer_);
+                offset += currSize;
+            }
 
             // 3.5 Read and decompress the confidence frame corresponding to the depth frame
             currSize = record3DHeader.confidenceMapSize;
-            // Resize the decompressed confidence image buffer
-            size_t decompressedConfidenceDataSize = record3DHeader.confidenceWidth * record3DHeader.confidenceHeight * sizeof(uint8_t);
-            if ( confidenceImageBuffer_.size() != decompressedConfidenceDataSize )
-            {
-                confidenceImageBuffer_.resize(decompressedConfidenceDataSize);
+            if(currSize > 0) {
+                // Resize the decompressed confidence image buffer
+                size_t decompressedConfidenceDataSize = record3DHeader.confidenceWidth * record3DHeader.confidenceHeight * sizeof(uint8_t);
+                if ( confidenceImageBuffer_.size() != decompressedConfidenceDataSize )
+                {
+                    confidenceImageBuffer_.resize(decompressedConfidenceDataSize);
+                }
+
+                DecompressBuffer(rawMessageBuffer.data() + offset, currSize, confidenceImageBuffer_);
+                offset += currSize;
             }
-
-            DecompressBuffer(rawMessageBuffer.data() + offset, currSize, confidenceImageBuffer_);
-            offset += currSize;
-
+            
             // 3.6 Read the misc buffer
             if ( record3DHeader.miscSize > 0 )
             {

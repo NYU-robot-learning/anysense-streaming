@@ -1,15 +1,6 @@
-# [*Record3D – Point Cloud Animation and Streaming*](https://record3d.app/): the accompanying library 
+# A library accompanying the [*AnySense*](https://anysense.app) app. 
 
-**2024/05/27 Update**: Added confidence map streaming (introduced breaking changes). **To be used with Record3D 1.10 and newer.**
-
-**2022/08/16 Update**: Added camera position streaming (introduced breaking changes). **To be used with Record3D 1.7.2 and newer.**
-
-**2021/07/28 Update**: Introduced support for higher-quality RGB LiDAR streaming. **To be used with Record3D 1.6 and newer.**
-
-**2020/09/17 Update**: Introduced LiDAR support. To be used with Record3D 1.4 and newer.
-
-This project provides C++ and Python libraries for the [iOS Record3D app](https://record3d.app/) which allows you (among other features) to 
-live-stream RGB**D** video from iOS devices with TrueDepth camera to a computer via USB cable.
+**This library is adapted from the [Record3D](https://github.com/marek-simonik/record3d) streaming library.**
 
 ## Prerequisites
   - Install [CMake](https://cmake.org/download/) >= **3.13.0** and make sure it is in `PATH`.
@@ -20,23 +11,21 @@ live-stream RGB**D** video from iOS devices with TrueDepth camera to a computer 
 The libraries are multiplatform — macOS, Linux and Windows are supported.
 
 ### Python
-You can install either via `pip`:
+Build from source (run as admin/root):
     
-    python -m pip install record3d
-
-or build from source (run as admin/root):
-    
-    git clone https://github.com/marek-simonik/record3d
-    cd record3d
+    git clone https://github.com/NYU-robot-learning/anysense-streaming.git
+    cd anysense-streaming
     python setup.py install
+
+Note: you may need to run `sudo python setup.py install` to run as root. 
     
 ### C++
 After running the following, you will find compiled static library in the `build` folder and header files in the `include` folder.
 
 **macOS and Linux**
 
-    git clone https://github.com/marek-simonik/record3d
-    cd record3d
+    git clone https://github.com/NYU-robot-learning/anysense-streaming.git
+    cd anysense-streaming
     mkdir build && cd build
     cmake -DCMAKE_BUILD_TYPE=Release ..
     make -j8 record3d_cpp
@@ -45,8 +34,8 @@ After running the following, you will find compiled static library in the `build
 
 **Windows**
 
-    git clone https://github.com/marek-simonik/record3d
-    cd record3d
+    git clone https://github.com/NYU-robot-learning/anysense-streaming.git
+    cd anysense-streaming
     md build
     cd build
     cmake -DCMAKE_BUILD_TYPE=Release -G "Visual Studio 15 2017 Win64" ..
@@ -58,15 +47,15 @@ There is a Python (`demo-main.py`) and C++ (`src/DemoMain.cpp`) sample project t
 Before running the sample applications, connect your iOS device to your computer and open the Record3D iOS app. Go to the Settings tab and enable "USB Streaming mode".
 
 ### Python
-After installing the `record3d` library, run `python demo-main.py` and press the record button to start streaming RGBD data.
+After installing the modified `record3d` library via the instructions above, run `python demo-main.py` and press the record button to start streaming RGBD data.
 
 ### C++
 You can build the C++ demo app by running the following (press the record button in the iOS app to start streaming RGBD data):
 
 **macOS and Linux**
 
-    git clone https://github.com/marek-simonik/record3d
-    cd record3d
+    git clone https://github.com/NYU-robot-learning/anysense-streaming.git
+    cd anysense-streaming
     mkdir build && cd build
     cmake -DCMAKE_BUILD_TYPE=Release ..
     make -j8 demo
@@ -74,8 +63,8 @@ You can build the C++ demo app by running the following (press the record button
     
 **Windows**
 
-    git clone https://github.com/marek-simonik/record3d
-    cd record3d
+    git clone https://github.com/NYU-robot-learning/anysense-streaming.git
+    cd anysense-streaming
     md build
     cd build
     cmake -DCMAKE_BUILD_TYPE=Release -G "Visual Studio 15 2017 Win64" ..

@@ -178,7 +178,6 @@ namespace Record3D
 
             // 3.4 Read and decompress the depth frame
             currSize = record3DHeader.depthSize;
-            std::cout<<"Depth size: "<<(currSize > 0)<<std::endl;
 
             if(currSize > 0) {
                 // Resize the decompressed depth image buffer

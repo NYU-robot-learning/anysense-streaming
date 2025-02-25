@@ -53,8 +53,6 @@ class DemoApp:
             intrinsic_mat = self.get_intrinsic_mat_from_coeffs(self.session.get_intrinsic_mat())
             camera_pose = self.session.get_camera_pose()  # Quaternion + world position (accessible via camera_pose.[qx|qy|qz|qw|tx|ty|tz])
 
-            print(intrinsic_mat)
-
             # You can now e.g. create point cloud by projecting the depth map using the intrinsic matrix.
 
             # Postprocess it
